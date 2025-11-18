@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
+        // Ezzel kikapcsoljuk az automatikus 'createdAt' és 'updatedAt' mezők létrehozását
+    timestamps: false 
     // További modell beállítások (pl. tableName: 'tasks')
   });
 

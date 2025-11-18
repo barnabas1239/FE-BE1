@@ -72,6 +72,31 @@ app.post('/tasks', async (req, res) => {
   }
 });
 
+// user létrehozása
+
+app.post('/users', async (req, res) => {
+  try {
+    // 1. Kinyerjük a 'task' mezőt a kérés testéből
+    const { user } = req.body; 
+
+    // 2. Ellenőrzés: A mező nem lehet üres
+    if (!user) {
+      return res.status(400).json({ error: 'User adatok hiányoznak' });
+    }
+
+    // 3. Sequelize: Új rekord létrehozása a modell alapján
+    const newUser = await TaskModel.create({ user: user });
+
+    // 4. Válasz küldése a létrehozott objektummal (HTTP 201 Created)
+    res.status(201).json(newUser);
+    
+  } catch (error) {
+    console.error('Hiba az új user létrehozásakor:', error);
+    res.status(500).json({ error: 'Szerveroldali hiba.' });
+  }
+});
+
+
 // 4. Létrehozunk egy egyszerű GET végpontot
 // Példa: Összes feladat lekérdezése Sequelize-vel
 app.get('/tasks', async (req, res) => {
