@@ -4,8 +4,8 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "email": "user4@server.com",
-    "name": "user4"
+    "email": "user2@server.com",
+    "name": "user2"
 }
 
 ### --------------------------------------------------
@@ -54,3 +54,11 @@ DELETE http://localhost:3000/tasks/2
 ### Felhasználó törlése (és a hozzá tartozó feladatoké)
 # FONTOS: Cseréld le a '2'-est a törölni kívánt felhasználó valós ID-jára!
 DELETE http://localhost:3000/users/3
+
+### --------------------------------------------------
+
+### GET kérés a feladatok lapozott lekérdezésére (pl. 1. oldal)
+GET http://localhost:3000/tasks/page/1
+
+### --------------------------------------------------
+

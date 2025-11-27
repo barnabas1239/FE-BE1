@@ -1,15 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const { models } = require('../db');
-const { Task: TaskModel } = models;
+const { Task: TaskModel, User: UserModel } = models;
 
 // POST /tasks - Új feladat létrehozása
 router.post('/', async (req, res) => {
   try {
     const { title, description, userId } = req.body;
 
+    // Ellenőrizzük a kötelező mezőket
     if (!title || !userId) {
       return res.status(400).json({ error: 'A "title" és "userId" mezők kitöltése kötelező.' });
+    }
+
+    // Ellenőrizzük, hogy létezik-e a felhasználó
+    const user = await UserModel.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'A megadott userId-val nem található felhasználó.' });
     }
     const newTask = await TaskModel.create({ title, description, userId });
     res.status(201).json(newTask);
@@ -22,10 +29,33 @@ router.post('/', async (req, res) => {
 // GET /tasks - Összes feladat lekérdezése
 router.get('/', async (req, res) => {
   try {
-    const tasks = await TaskModel.findAll();
+    // A feladatokhoz csatoljuk a hozzájuk tartozó felhasználó adatait is
+    const tasks = await TaskModel.findAll({ include: 'user' });
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ error: 'Hiba a feladatok lekérdezésekor.' });
+  }
+});
+
+// GET /tasks/page/:page - Feladatok lekérdezése lapozással (max 20)
+router.get('/page/:page', async (req, res) => {
+  try {
+    const page = parseInt(req.params.page, 10);
+    if (isNaN(page) || page < 1) {
+      return res.status(400).json({ error: 'Érvénytelen oldalszám.' });
+    }
+
+    const limit = 5;
+    const offset = (page - 1) * limit;
+
+      const { rows: tasks, count } = await TaskModel.findAndCountAll({
+      limit: limit,
+      offset: offset,
+      include: 'user' // A felhasználó adatait is hozzácsatolja
+    });
+    res.json({ tasks, totalItems: count, totalPages: Math.ceil(count / limit), currentPage: page });
+  } catch (error) {
+    res.status(500).json({ error: 'Hiba a feladatok lapozott lekérdezésekor.' });
   }
 });
 
