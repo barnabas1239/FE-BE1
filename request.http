@@ -58,7 +58,7 @@ DELETE http://localhost:3000/users/3
 ### --------------------------------------------------
 
 ### GET kérés a feladatok lapozott lekérdezésére (pl. 1. oldal)
-GET http://localhost:3000/tasks/page/1
+GET http://localhost:3000/tasks/page/6
 
 ### --------------------------------------------------
 

@@ -3,8 +3,8 @@ const express = require('express');
 const { connectToDatabase, models } = require('./db'); // Adatbázis modul importálása
 
 // Útvonalak importálása
-const taskRoutes = require('./routes/taskRoutes');
-const userRoutes = require('./routes/userRoutes');
+const taskRoutes = require('./controllers/taskController');
+const userRoutes = require('./controllers/userController');
 
 // 2. Létrehozzuk az alkalmazás példányát
 const app = express();
