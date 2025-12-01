@@ -13,6 +13,17 @@ router.post('/', async (req, res) => {
   }
 });
 
+// POST /users/register - Új felhasználó regisztrációja
+router.post('/register', async (req, res) => {
+  try {
+    const { email, password, name } = req.body;
+    const newUser = await userService.register(email, password, name);
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message || 'Szerveroldali hiba.' });
+  }
+});
+
 // GET /users - Összes felhasználó lekérdezése
 router.get('/', async (req, res) => {
   try {

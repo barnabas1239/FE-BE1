@@ -1,4 +1,5 @@
 const userRepository = require('../repositories/userRepository');
+const { Op } = require('sequelize');
 
 exports.createUser = async (email, name) => {
   if (!email) {
@@ -7,6 +8,24 @@ exports.createUser = async (email, name) => {
     throw error;
   }
   return await userRepository.create({ email, name });
+};
+
+exports.register = async (email, password, name) => {
+  if (!email || !password) {
+    const error = new Error('Az "email" és "password" mezők kitöltése kötelező.');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const existingUser = await userRepository.findOne({ where: { email: email } });
+  if (existingUser) {
+    const error = new Error('Ez az e-mail cím már regisztrálva van.');
+    error.statusCode = 409; // Conflict
+    throw error;
+  }
+
+  const newUser = await userRepository.create({ email, password, name });
+  return { id: newUser.id, email: newUser.email, name: newUser.name }; // Jelszó nélkül adjuk vissza
 };
 
 exports.getAllUsers = async () => {

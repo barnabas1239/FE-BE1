@@ -9,6 +9,10 @@ exports.findAll = async () => {
   return await UserModel.findAll();
 };
 
+exports.findOne = async (options) => {
+  return await UserModel.findOne(options);
+};
+
 exports.findById = async (id) => {
   return await UserModel.findByPk(id);
 };
