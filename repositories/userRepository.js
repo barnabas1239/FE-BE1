@@ -45,10 +45,21 @@ const deleteById = (id) => {
   return UserModel.destroy({ where: { id: id } });
 };
 
+/**
+ * Egy meglévő felhasználói példány frissítése.
+ * @param {User} user A Sequelize felhasználó modell példánya.
+ * @param {object} data A frissítendő adatok.
+ * @returns {Promise<User>} A frissített felhasználó.
+ */
+const update = (user, data) => {
+  return user.update(data);
+};
+
 module.exports = {
   create,
   findOne,
   findAll,
   findById,
   deleteById,
+  update,
 };

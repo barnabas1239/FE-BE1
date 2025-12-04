@@ -38,8 +38,22 @@ const registerUser = async (req, res) => {
     }
   };
 
+// --- MÓDOSÍTÁS KEZDETE ---
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const result = await userService.loginUser(email, password);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Hiba a bejelentkezés során:', error);
+    res.status(error.statusCode || 500).json({ error: error.message || 'Szerveroldali hiba.' });
+  }
+};
+// --- MÓDOSÍTÁS VÉGE ---
 
 module.exports = {
   getAllUsers,
   deleteUser,
-  registerUser };
+  registerUser,
+  loginUser, // --- MÓDOSÍTÁS ---
+};
