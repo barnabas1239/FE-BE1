@@ -24,6 +24,7 @@ async function initializeApp() {
 }
 
 
+
 initializeApp();
 
 // 5. Útvonalak "bekötése"
