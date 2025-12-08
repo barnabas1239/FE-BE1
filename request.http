@@ -4,9 +4,9 @@ POST http://localhost:3000/users/register
 Content-Type: application/json
 
 {
-    "email": "user26@server.com",
+    "email": "user36@server.com",
     "name": "Teszt Elek",
-    "password": "user23_pwd"
+    "password": "user36_pwd"
 
 }
 //    "password": "user23_pwd"
@@ -16,13 +16,13 @@ Content-Type: application/json
 ### Bejelentkezés
 # Használd a regisztrált felhasználó adatait!
 # A @name direktívával elmentjük a választ egy 'loginResponse' nevű változóba.
-@name loginRequest
+#@name loginRequest
 POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "email": "user26@server.com",
-    "password": "user23_pwd"
+    "email": "user36@server.com",
+    "password": "user36_pwd"
 }
 
 ### --------------------------------------------------
@@ -30,7 +30,7 @@ Content-Type: application/json
 ### GET kérés az összes feladat lekérdezésére (AUTHENTIKÁLT)
 # FONTOS: A bejelentkezés után kapott tokent másold be ide a <...> helyére!
 GET http://localhost:3000/tasks
-Authorization: Bearer 2c88cf43d6c877bb80021b2a674c86157f855a607c107f436f0a993a65ef34a2
+Authorization: Bearer 7a7635e03b93aa1220a12e3520497db1adc3b0c2050e07c64789221c2dc52765
 
 
 ### --------------------------------------------------

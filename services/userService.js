@@ -36,10 +36,10 @@ const loginUser = async (email, password) => {
 
   // 3. Token generálása és érvényesség beállítása
   const token = crypto.randomBytes(32).toString('hex');
-  const valid_thru = new Date(Date.now() + 10 * 60 * 1000); // 10 perc
+  const token_valid_until = new Date(Date.now() + 10 * 60 * 1000); // 10 perc
 
   // 4. Felhasználó frissítése az új tokennel
-  await userRepository.update(user, { token, valid_thru });
+  await userRepository.update(user, { token, token_valid_until });
 
   // 5. Token visszaadása
   return { token };

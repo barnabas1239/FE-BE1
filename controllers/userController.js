@@ -30,8 +30,15 @@ const deleteUser = async (req, res) => {
 
 const registerUser = async (req, res) => {
     try {
-      const newUser = await userService.registerUser(req.body);
-      res.status(201).json(newUser);
+      // 1. Létrehozzuk a felhasználót
+      const { email, password } = req.body;
+      await userService.registerUser(req.body);
+
+      // 2. A sikeres regisztráció után azonnal be is léptetjük a felhasználót,
+      //    hogy kapjon egy tokent.
+      const loginResult = await userService.loginUser(email, password);
+
+      res.status(201).json(loginResult);
     } catch (error) {
       console.error('Hiba az új user létrehozásakor:', error);
       res.status(error.statusCode || 500).json({ error: error.message || 'Szerveroldali hiba.' });
