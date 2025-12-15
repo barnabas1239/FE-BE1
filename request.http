@@ -30,7 +30,7 @@ Content-Type: application/json
 ### GET kérés az összes feladat lekérdezésére (AUTHENTIKÁLT)
 # FONTOS: A bejelentkezés után kapott tokent másold be ide a <...> helyére!
 GET http://localhost:3000/tasks
-Authorization: Bearer 7a7635e03b93aa1220a12e3520497db1adc3b0c2050e07c64789221c2dc52765
+Authorization: Bearer 1af5b0a8c306abbf29c2cb9e2be8a8676dd6694a760420f015c90e0aae7c49b5
 
 
 ### --------------------------------------------------
@@ -68,7 +68,11 @@ GET http://localhost:3000/users
 
 ###
 
-DELETE http://localhost:3000/tasks/2
+### Task törlése (AUTHENTIKÁLT - ADMIN SZÜKSÉGES)
+# FONTOS: A bejelentkezés után kapott tokent használja a {{...}} szintaxis.
+# A '2'-est cseréld a törölni kívánt task ID-jára!
+DELETE http://localhost:3000/tasks/1
+Authorization: Bearer 1af5b0a8c306abbf29c2cb9e2be8a8676dd6694a760420f015c90e0aae7c49b5
 
 ### --------------------------------------------------
 

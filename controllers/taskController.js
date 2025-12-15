@@ -37,6 +37,13 @@ const getTasksPaginated = async (req, res) => {
 // DELETE /tasks/:id
 const deleteTask = async (req, res) => {
   try {
+    // Feltételezzük, hogy a middleware már validálta a tokent és a req.user tartalmazza a felhasználó adatait
+    const requestingUser = req.user;
+
+    if (requestingUser.role !== 'admin') {
+      return res.status(403).json({ error: 'Nincs jogosultsága a feladat törléséhez.' });
+    }
+
     const { id } = req.params;
     const deletedTask = await taskService.deleteTask(id);
 
